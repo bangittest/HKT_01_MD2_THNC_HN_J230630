@@ -1,50 +1,65 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+
 export default function Cart(props) {
   const [open, setOpen] = useState(true);
-  const[count,setCount]=useState("");
-  const handleclose = props.handleclose;
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const [cart, setCart] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    // Fetch cart data from localStorage when component mounts
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(storedCart);
+  }, []);
+
+  useEffect(() => {
+    // Calculate total amount whenever cart changes
+    let sum = 0;
+    for (const product of cart) {
+      sum += product.quantity * product.price;
+    }
+    setTotalAmount(sum);
+  }, [cart]);
+
   const removeFromCartHandler = (productId) => {
-    // Lọc ra danh sách giỏ hàng mà không bao gồm sản phẩm có ID bằng productId
-    const updatedCart = cart.filter((product) => product !== productId);
+    const updatedCart = cart.filter((product) => product.id !== productId);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    alert("xoa thanh cong");
-    setOpen(false);
+    setCart(updatedCart);
   };
 
   const increaseQuantity = (productId) => {
     const updatedCart = cart.map((product) => {
       if (product.id === productId) {
-        // Tăng số lượng sản phẩm lên 1
         product.quantity += 1;
       }
-      setCount("")
       return product;
-     
     });
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCart(updatedCart);
   };
 
   const decreaseQuantity = (productId) => {
     const updatedCart = cart.map((product) => {
-      if (product.id === productId) {
-        if (product.quantity > 1) {
-          // Giảm số lượng sản phẩm đi 1 nếu số lượng lớn hơn 1
-          product.quantity -= 1;
-        }
+      if (product.id === productId && product.quantity > 1) {
+        product.quantity -= 1;
       }
-      setCount("")
       return product;
     });
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
+  const handleCheckout = () => {
+    localStorage.removeItem("cart");
+    setCart([]);
+    setTotalAmount(0);
+    // Add additional logic for handling the order, e.g., redirecting to a confirmation page.
   };
 
   const handlecloseForm = () => {
-    handleclose();
+    setOpen(false);
   };
-  let sum=0
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -99,7 +114,7 @@ export default function Cart(props) {
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {cart.map((product) =>{
-                              sum += product.quantity*product.price;
+                             
                               return (
                               
                               <li key={product.id} className="flex py-6">
@@ -119,7 +134,7 @@ export default function Cart(props) {
                                           {product.name}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className="ml-4">{}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
                                       {product.color}
@@ -161,7 +176,7 @@ export default function Cart(props) {
                                   </div>
                                 </div>
                               </li>
-                            )})})
+                            )})}
                           </ul>
                         </div>
                       </div>
@@ -170,13 +185,14 @@ export default function Cart(props) {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>{sum}</p>
+                        <p>Total: ${totalAmount.toFixed(2)}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
                         <a
+                        onClick={handleCheckout}
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
@@ -192,5 +208,6 @@ export default function Cart(props) {
         </div>
       </Dialog>
     </Transition.Root>
+    
   );
 }

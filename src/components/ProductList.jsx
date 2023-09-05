@@ -4,7 +4,7 @@ import Cart from "./Cart";
 export default function ProductList() {
   const [show, setShow] = useState(false);
   const [cart, setCart] = useState([]);
-  const products=JSON.parse(localStorage.getItem("product-list"))||[];
+  // const products=JSON.parse(localStorage.getItem("product-list"))||[];
 
   // const addToCartHandler = (products) => {
   //   setCart([...cart, products]);
@@ -26,49 +26,49 @@ export default function ProductList() {
 
 
 
-  // const products = [
-  //   {
-  //     id: 1,
-  //     name: 'Basic Tee',
-  //     href: '#',
-  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  //     imageAlt: "Front of men's Basic Tee in black.",
-  //     quantity:100,
-  //     price: '$35',
-  //     color: 'Black',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Basdsssfic Tee',
-  //     href: '#',
-  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  //     imageAlt: "Front of men's Basic Tee in black.",
-  //     quantity:100,
-  //     price: '$35',
-  //     color: 'Black',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Basiccccc Tee',
-  //     href: '#',
-  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  //     imageAlt: "Front of men's Basic Tee in black.",
-  //     quantity:100,
-  //     price: '$35',
-  //     color: 'Black',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Basic Teeccccc',
-  //     href: '#',
-  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
-  //     imageAlt: "Front of men's Basic Tee in black.",
-  //     quantity:100,
-  //     price: '$35',
-  //     color: 'Black',
-  //   },
+  const products = [
+    {
+      id: 1,
+      name: 'Basic Tee',
+      href: '#',
+      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+      imageAlt: "Front of men's Basic Tee in black.",
+      quantity:100,
+      price: '35',
+      color: 'Black',
+    },
+    {
+      id: 2,
+      name: 'Basdsssfic Tee',
+      href: '#',
+      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+      imageAlt: "Front of men's Basic Tee in black.",
+      quantity:100,
+      price: '35',
+      color: 'Black',
+    },
+    {
+      id: 3,
+      name: 'Basiccccc Tee',
+      href: '#',
+      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+      imageAlt: "Front of men's Basic Tee in black.",
+      quantity:100,
+      price: '35',
+      color: 'Black',
+    },
+    {
+      id: 4,
+      name: 'Basic Teeccccc',
+      href: '#',
+      imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+      imageAlt: "Front of men's Basic Tee in black.",
+      quantity:100,
+      price: '35',
+      color: 'Black',
+    },
 
-  // ]
+  ]
   
 
   // localStorage.setItem("product-list", JSON.stringify(products));
